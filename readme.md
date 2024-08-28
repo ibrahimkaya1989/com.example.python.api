@@ -1,9 +1,12 @@
-# Dependecy
+## Dependecy
+
 ```bash
-pip install requests
+pip install requests pytest pytest-html
 ```
 
-# Run
+## Run
+
 ```bash
+python -m venv venv
 python test_api.py
 ```

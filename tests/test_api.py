@@ -1,19 +1,42 @@
-import pytest
-from utils.api_client import APIClient
+# test_api.py
+import requests
 
-BASE_URL = "https://api.example.com"
+BASE_URL = "https://jsonplaceholder.typicode.com"
 
-@pytest.fixture(scope="module")
-def api_client():
-    return APIClient(base_url=BASE_URL)
-
-def test_get_endpoint(api_client):
-    response = api_client.get("/endpoint")
+def test_get_posts():
+    response = requests.get(f"{BASE_URL}/posts")
     assert response.status_code == 200
-    assert "expected_key" in response.json()
+    assert isinstance(response.json(), list)
+    assert len(response.json()) > 0
 
-def test_post_endpoint(api_client):
-    payload = {"key": "value"}
-    response = api_client.post("/endpoint", json=payload)
+def test_create_post():
+    payload = {
+        "title": "foo",
+        "body": "bar",
+        "userId": 1
+    }
+    response = requests.post(f"{BASE_URL}/posts", json=payload)
     assert response.status_code == 201
-    assert response.json()["key"] == "value"
+    json_response = response.json()
+    assert json_response["title"] == "foo"
+    assert json_response["body"] == "bar"
+    assert json_response["userId"] == 1
+
+def test_update_post():
+    post_id = 1
+    payload = {
+        "id": post_id,
+        "title": "updated title",
+        "body": "updated body",
+        "userId": 1
+    }
+    response = requests.put(f"{BASE_URL}/posts/{post_id}", json=payload)
+    assert response.status_code == 200
+    json_response = response.json()
+    assert json_response["title"] == "updated title"
+    assert json_response["body"] == "updated body"
+
+def test_delete_post():
+    post_id = 1
+    response = requests.delete(f"{BASE_URL}/posts/{post_id}")
+    assert response.status_code == 200
