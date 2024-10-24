@@ -1,5 +1,9 @@
 # Dictionary
-/reports
+/.idea/
+/.vscode/
+/.pytest_cache/
+/reports/
 
 # File
-*.tmp
+*.logs
+*.log

@@ -1,12 +1,16 @@
 ## Dependecy
-
 ```bash
-pip install requests pytest pytest-html -> Dependencies
-python -m venv venv -> Environment
+pip list
+pip install behave requests pytest pytest-html
+```
+
+## Environment
+```bash
+python -m venv venv
 ```
 
 ## Run
-
 ```bash
 pytest ./tests/test_api.py
+start ./reports/report.html
 ```
